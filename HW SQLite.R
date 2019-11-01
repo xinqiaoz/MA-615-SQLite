@@ -7,6 +7,10 @@ library(readxl)
 donors_total<- read_excel("~/Desktop/BU/MA615/HW/Top MA Donors 2016-2020.xlsx",sheet = 2)
 JFC<- read_excel("~/Desktop/BU/MA615/HW/Top MA Donors 2016-2020.xlsx",sheet = 3)
 
+##### Data Cleaning for Contributors' names. Code from discussion board by Kerui Cao. 
+donors_total['contrib'] = gsub(donors_total$contrib,pattern = ", ",replacement = ",")
+donors_total['contrib'] = gsub(donors_total$contrib,pattern = "\\s\\w*",replacement = "")
+######
 
 contributors<- donors_total %>% select(contribid, fam, contrib, City, State, Zip, Fecoccemp, orgname, lastname) %>% distinct() %>% na.omit()
 contributions<- donors_total %>% select(cycle, contribid, fam, date, amount, recipid, type, fectransid, cmteid) %>% distinct() %>% na.omit()
